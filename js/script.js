@@ -21,7 +21,7 @@ String.prototype.setChar = function (index, char) {
     }
 }
 
-// -------------------- PASSWORDS --------------------
+// -------------------- VARIABLES AND ARRAYS --------------------
 
 const proverbs = ["Niedaleko pada jabłko od jabłoni", "Apetyt rośnie w miarę jedzenia",
     "Darowanemu koniowi w zęby się nie zagląda", "Pierwsze koty za płoty",
@@ -66,6 +66,9 @@ const alphabet = ["A", "Ą", "B", "C", "Ć", "D", "E", "Ę", "F",
     "U", "V", "W", "X", "Y", "Z", "Ź", "Ż"];
 const letters = [];
 alphabet.forEach(char => letters.push(new Letter(char, false)));
+
+const yes = new Audio("audio/yes.wav");
+const no = new Audio("audio/no.wav");
 
 // -------------------- FUNCTIONS --------------------
 
@@ -149,12 +152,14 @@ function check(letter) {
     if (letter != "") {
         const div = document.getElementById(letter);
         if (hitted === true) {
+            yes.play();
             div.style.background = "#003300";
             div.style.color = "#00C000";
             div.style.border = "3px solid #00C000";
             div.style.cursor = "default";
             show_password();
         } else {
+            no.play();
             div.style.background = "#330000";
             div.style.color = "#C00000";
             div.style.border = "3px solid #C00000";
@@ -168,10 +173,10 @@ function check(letter) {
     }
 
     if (password === hidden_password) {
-        final_words("Tak jest!");
+        final_words("Brawo!");
     }
 
-    if (number_of_mistakes >= 9) {
+    if (number_of_mistakes >= 6) {
         final_words("Przegrana!");
     }
 }
