@@ -73,7 +73,7 @@ const no = new Audio("audio/no.wav");
 // -------------------- FUNCTIONS --------------------
 
 function show_password() {
-    document.getElementById("board").innerHTML = hidden_password;
+    document.getElementById("board").innerHTML = `<p>${hidden_password}</p>`;
 }
 
 function start() {
@@ -106,7 +106,7 @@ function select(_letter) {
         if (letter.char === _letter) {
             if (letter.selected) {
                 remove_selection_color(selected_letter);
-                selected_letter = letter.char;
+                selected_letter = "";
                 letter.selected = false;
             } else {
                 remove_selection_color(selected_letter);
@@ -134,13 +134,15 @@ function final_words(words) {
     keyboard.appendChild(p);
 
     const span = document.createElement("span");
-    span.setAttribute("class", "reset");
+    span.setAttribute("class", "reset shake-bottom");
     span.setAttribute("onclick", "location.reload();");
     span.innerText = "JESZCZE RAZ?";
     keyboard.appendChild(span);
 }
 
 function check(letter) {
+    const div = document.getElementById(letter);
+    div.classList.add("rotate-center");
     let hitted = false;
     for (let i = 0; i < password.length; i++) {
         if (password.charAt(i) === letter) {
@@ -150,7 +152,6 @@ function check(letter) {
     }
 
     if (letter != "") {
-        const div = document.getElementById(letter);
         if (hitted === true) {
             yes.play();
             div.style.background = "#003300";
