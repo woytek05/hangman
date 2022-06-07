@@ -75,8 +75,44 @@ alphabet.forEach(char => letters.push(new Letter(char, false)));
 const yes = new Audio("audio/yes.wav");
 const no = new Audio("audio/no.wav");
 
+let seconds = 00;
+let tens = 00;
+let mins = 00;
+const getSeconds = document.createElement("span");
+const getTens = document.createElement("span");
+const getMins = document.createElement("span");
+let interval;
+
 
 // -------------------- FUNCTIONS --------------------
+
+function startTimer() {
+    tens++;
+    if (tens <= 9) {
+        getTens.innerHTML = '0' + tens;
+    }
+    if (tens > 9) {
+        getTens.innerHTML = tens;
+    }
+    if (tens > 99) {
+        seconds++;
+        getSeconds.innerHTML = '0' + seconds;
+        tens = 0;
+        getTens.innerHTML = '0' + 0;
+    }
+    if (seconds > 9) {
+        getSeconds.innerHTML = seconds;
+    }
+    if (seconds > 59) {
+        mins++;
+        getMins.innerHTML = '0' + mins;
+        seconds = 0;
+        getSeconds.innerHTML = '0' + 0;
+    }
+    if (mins > 9) {
+        getSeconds.innerHTML = mins;
+    }
+}
 
 function show_password() {
     document.getElementById("board").innerHTML = `<p>${hidden_password}</p>`;
@@ -101,6 +137,8 @@ function start() {
         alphabet_container.appendChild(div);
     });
     show_password();
+    clearInterval(interval);
+    interval = setInterval(startTimer, 10);
 }
 
 function add_selection_color(letter) {
@@ -136,16 +174,25 @@ function select(_letter) {
 
 function final_words(words) {
     const keyboard = document.getElementById("keyboard");
+    keyboard.innerHTML = "";
     keyboard.style.display = "flex";
     keyboard.style.flexDirection = "column";
     keyboard.style.justifyContent = "center";
     keyboard.style.alignItems = "center";
     keyboard.style.textAlign = "center";
-    keyboard.innerHTML = "";
 
     const p = document.createElement("p");
-    p.innerText = words += ` Prawidłowe hasło: ${password}`;
+    p.innerText = words + ` Prawidłowe hasło: ${password}`;
     keyboard.appendChild(p);
+    const timer = document.createElement("p");
+    if (getMins.innerText != "") {
+        getMins.innerText += ":";
+    }
+    getSeconds.innerText += ":";
+    timer.appendChild(getMins);
+    timer.appendChild(getSeconds);
+    timer.appendChild(getTens);
+    keyboard.appendChild(timer);
 
     const span = document.createElement("span");
     span.setAttribute("class", "reset shake-bottom");
@@ -156,7 +203,9 @@ function final_words(words) {
 
 function check(letter) {
     const div = document.getElementById(letter);
-    div.classList.add("rotate-center");
+    if (div != null) {
+        div.classList.add("rotate-center");
+    }
     let hitted = false;
     for (let i = 0; i < password.length; i++) {
         if (password.charAt(i) === letter) {
@@ -188,10 +237,12 @@ function check(letter) {
     }
 
     if (password === hidden_password) {
+        clearInterval(interval);
         final_words("Brawo!");
     }
 
     if (number_of_mistakes >= 6) {
+        clearInterval(interval);
         final_words("Przegrana!");
     }
 }
