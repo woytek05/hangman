@@ -49,31 +49,45 @@ const books = ["Hobbit", "Zbrodnia i kara", "Władca pierścieni", "Nowy wspania
     "Alchemik", "Boska komedia", "Don Kichot", "Faust", "Odyseja", "Iliada",
     "Król Edyp"];
 
+let password = "";
+let array_name = sessionStorage.getItem("array_name");
 
-let password = proverbs.random();
-password = password.toUpperCase();
-let hidden_password = "";
-let selected_letter = "";
-let number_of_mistakes = 0;
-
-for (let i = 0; i < password.length; i++) {
-    password.charAt(i) === " " ? hidden_password += " " : hidden_password += "-";
+if (array_name === "proverbs") {
+    password = proverbs.random();
+} else if (array_name === "people") {
+    password = people.random();
+} else if (array_name === "films") {
+    password = films.random();
+} else if (array_name === "books") {
+    password = books.random();
 }
 
+password = password.toUpperCase();
+let hidden_password = encrypt_password(password);
+let selected_letter = "";
+let number_of_mistakes = 0;
 const alphabet = ["A", "Ą", "B", "C", "Ć", "D", "E", "Ę", "F",
     "G", "H", "I", "J", "K", "L", "Ł", "M", "N",
     "Ń", "O", "Ó", "P", "Q", "R", "S", "Ś", "T",
     "U", "V", "W", "X", "Y", "Z", "Ź", "Ż"];
 const letters = [];
 alphabet.forEach(char => letters.push(new Letter(char, false)));
-
 const yes = new Audio("audio/yes.wav");
 const no = new Audio("audio/no.wav");
+
 
 // -------------------- FUNCTIONS --------------------
 
 function show_password() {
     document.getElementById("board").innerHTML = `<p>${hidden_password}</p>`;
+}
+
+function encrypt_password(password) {
+    let hidden_password = "";
+    for (let i = 0; i < password.length; i++) {
+        password.charAt(i) === " " ? hidden_password += " " : hidden_password += "-";
+    }
+    return hidden_password;
 }
 
 function start() {
@@ -82,7 +96,7 @@ function start() {
         const div = document.createElement("div");
         div.setAttribute("id", letter.char);
         div.setAttribute("class", "letter");
-        div.setAttribute("onclick", `select("${letter.char}");`);
+        div.setAttribute("onclick", `select('${letter.char}');`);
         div.innerText = letter.char;
         alphabet_container.appendChild(div);
     });
@@ -152,7 +166,7 @@ function check(letter) {
     }
 
     if (letter != "") {
-        if (hitted === true) {
+        if (hitted) {
             yes.play();
             div.style.background = "#003300";
             div.style.color = "#00C000";
