@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 50px;
     width: 100%;
     height: 100vh;
 }
@@ -22,8 +21,21 @@
     border: 3px solid var(--color-text);
     border-radius: 10px;
     color: var(--color-text);
-    margin-top: 50px;
+    margin-top: 25px;
+    margin-bottom: 50px;
     padding: 5px 10px 5px 10px;
+}
+
+#category {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-left: 3px solid var(--color-text);
+    border-bottom: 3px solid var(--color-text);
+    border-right: 3px solid var(--color-text);
+    border-radius: 10px;
+    padding: 5px 20px 5px 20px;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
 }
 
 #game {

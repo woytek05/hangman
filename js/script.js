@@ -36,30 +36,39 @@ const people = ["Dwayne Johnson", "Joe Biden", "Elon Musk", "Jeff Bezos", "Kylie
     "Taylor Swift", "Tiger Woods", "Will Smith", "Jennifer Lopez",
     "Mark Zuckerberg", "Lionel Messi", "Selena Gomez", "LeBron James",
     "Fiodor Dostojewski", "John Ronald Reuel Tolkien", "Lew Tołstoj",
-    "Fryderyk Chopin", "Stanisław Moniuszko", "George Orwell", "Joanne Rowling",
+    "Fryderyk Chopin", "Stanisław Moniuszko", "George Orwell", "Joanne Murray",
     "Johann Wolfgang Goethe"];
 
 const films = ["Skazani na Shawshank", "Nietykalni", "Zielona mila", "Ojciec chrzestny",
     "Dwunastu gniewnych ludzi", "Forrest Gump", "Lot nad kukułczym gniazdem",
     "Lista Schindlera", "Pulp Fiction", "Joker", "Pianista", "Piękny umysł",
-    "Incepcja", "Milczenie owiec", "Król Lew", "Leon zawodowiec"];
+    "Incepcja", "Milczenie owiec", "Król Lew", "Leon zawodowiec", "Gladiator",
+    "Szeregowiec Ryan"];
 
 const books = ["Hobbit", "Zbrodnia i kara", "Władca pierścieni", "Nowy wspaniały świat",
     "Harry Potter", "Mały Książę", "Balladyna", "Ania z Zielonego Wzgórza",
     "Alchemik", "Boska komedia", "Don Kichot", "Faust", "Odyseja", "Iliada",
-    "Król Edyp"];
+    "Król Edyp", "Potop", "Pan Tadeusz", "Opowieść Wigilijna", "Latarnik", "Quo Vadis",
+    "Dzieci z Bullerbyn", "Konrad Wallenrod", "Cierpienia Młodego Wertera", "Dziady",
+    "Szatan z siódmej klasy", "Kamienie na szaniec", "Antygona", "Włam się do mózgu",
+    "Opowieści z Narnii", "Chłopcy z Placu Broni"];
 
 let password = "";
 let array_name = sessionStorage.getItem("array_name");
+const category = document.getElementById("category");
 
 if (array_name === "proverbs") {
     password = proverbs.random();
+    category.innerText = "PRZYSŁOWIA";
 } else if (array_name === "people") {
     password = people.random();
+    category.innerText = "LUDZIE";
 } else if (array_name === "films") {
     password = films.random();
+    category.innerText = "FILMY";
 } else if (array_name === "books") {
     password = books.random();
+    category.innerText = "KSIĄŻKI";
 }
 
 password = password.toUpperCase();
@@ -82,7 +91,6 @@ const getSeconds = document.createElement("span");
 const getTens = document.createElement("span");
 const getMins = document.createElement("span");
 let interval;
-
 
 // -------------------- FUNCTIONS --------------------
 
@@ -185,10 +193,11 @@ function final_words(words) {
     p.innerText = words + ` Prawidłowe hasło: ${password}`;
     keyboard.appendChild(p);
     const timer = document.createElement("p");
+    timer.innerText = "Czas ";
     if (getMins.innerText != "") {
-        getMins.innerText += ":";
+        getMins.innerText += ".";
     }
-    getSeconds.innerText += ":";
+    getSeconds.innerText += ".";
     timer.appendChild(getMins);
     timer.appendChild(getSeconds);
     timer.appendChild(getTens);
